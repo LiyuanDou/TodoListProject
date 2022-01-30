@@ -11,7 +11,10 @@ export default function Todo() {
   }
 
   return (
-    <div className="Todo">
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
       <InputArea onAdd={addTodo} />
       <ul>
         {lists.map((item, index) => (

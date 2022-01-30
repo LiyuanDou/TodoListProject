@@ -4,30 +4,40 @@ import "./styles.css";
 
 export default function InputArea(props) {
   const [inputText, setInputText] = useState("");
+  const [blankInput, SetBlankInput] = useState(false);
 
   function handleChange(event) {
-    console.log(event.target.value);
     setInputText(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    props.onAdd(inputText);
-    setInputText("");
+  }
+
+  function handleClick() {
+    if (inputText !== "") {
+      props.onAdd(inputText);
+      setInputText("");
+      SetBlankInput(false);
+    } else {
+      SetBlankInput(true);
+    }
   }
 
   return (
-    <div className="InputArea">
-      <h1>Todo List</h1>
-      <p>What's your plan for today?</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="text"
-          value={inputText}
-          placeholder="Write here"
-          onChange={handleChange}></input>
-        <button onClick={handleSubmit}>Add</button>
-      </form>
+    <div className="form">
+      <input
+        onSubmit={handleSubmit}
+        name="text"
+        value={inputText}
+        placeholder="Write here"
+        onChange={handleChange}></input>
+      <button onClick={handleClick}>
+        <span>Add</span>
+      </button>
+      {blankInput ? (
+        <p className="errorMessage">Error: Please write something</p>
+      ) : null}
     </div>
   );
 }
